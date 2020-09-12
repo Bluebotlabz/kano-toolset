@@ -255,6 +255,13 @@ def is_model_3_b(revision=None, use_cached=True):
     """
     return get_rpi_model(revision=revision, use_cached=use_cached) == RPI_3_KEY
 
+def is_model_4_b(revision=None, use_cached=True):
+    """Check if the Raspberry Pi is model 4 B.
+
+    See :func:`.get_rpi_model`.
+    """
+    return get_rpi_model(revision=revision, use_cached=use_cached) == RPI_4_KEY
+
 
 def get_rpi_model(revision=None, use_cached=True):
     """Get the model key of the Rasperry Pi.
@@ -283,11 +290,11 @@ def get_rpi_model(revision=None, use_cached=True):
             revision_hex = 0
 
         # The order of checks here is done Descending by Most Likely Model.
-        if revision_hex & 0x00FFFFFF in (0x00A02082, 0x00A22082, 0x00A32082, 0x00A52082):
-            model_name = RPI_3_KEY
-           
-         elif revision_hex & 0x00FFFFFF in (0x00A03111, 0x00B03111, 0x00B03112, 0x00C03111, 0x00C03112, 0x00D03114):
+         if revision_hex & 0x00FFFFFF in (0x00A03111, 0x00B03111, 0x00B03112, 0x00C03111, 0x00C03112, 0x00D03114):
             model_name = RPI_4_B_KEY
+            
+         elif revision_hex & 0x00FFFFFF in (0x00A02082, 0x00A22082, 0x00A32082, 0x00A52082):
+            model_name = RPI_3_KEY
 
         elif revision_hex & 0x00FFFFFF in (0x00A01040, 0x00A01041, 0x00A21041, 0x00A22042):
             model_name = RPI_2_B_KEY
