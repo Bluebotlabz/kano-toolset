@@ -25,6 +25,7 @@ RPI_COMPUTE_3_KEY = 'RPI/Compute/3'
 RPI_2_B_KEY = 'RPI/2/B'
 RPI_3_KEY = 'RPI/3'
 RPI_3_PLUS_KEY = 'RPI/3/B+'
+RPI_4_B_KEY = 'RPI/4/B'
 
 
 # "performance" scores for RPi boards
@@ -39,10 +40,12 @@ RPI_2_B_SCORE = 5000
 RPI_COMPUTE_3_SCORE = 7000
 RPI_3_SCORE = 7000
 RPI_3_PLUS_SCORE = 8000
+RPI_4_B_SCORE = 9000
 
 RPI_1_CPU_PROFILE = 'rpi_1'
 RPI_2_CPU_PROFILE = 'rpi_2'
 RPI_3_CPU_PROFILE = 'rpi_3'
+RPI_4_CPU_PROFILE = 'rpi_4'
 
 CPUINFO_FILE = '/proc/cpuinfo'
 
@@ -127,6 +130,12 @@ BOARD_PROPERTIES = {
         'name': 'Raspberry Pi 3 B+',
         'cpu_profile': RPI_3_CPU_PROFILE,
         'performance': RPI_3_PLUS_SCORE,
+        'arch': 'armv8'
+    },
+   RPI_4_B_KEY: {
+        'name': 'Raspberry Pi 4 B',
+        'cpu_profile': RPI_4_CPU_PROFILE,
+        'performance': RPI_4_B_SCORE,
         'arch': 'armv8'
     }
 }
@@ -276,6 +285,9 @@ def get_rpi_model(revision=None, use_cached=True):
         # The order of checks here is done Descending by Most Likely Model.
         if revision_hex & 0x00FFFFFF in (0x00A02082, 0x00A22082, 0x00A32082, 0x00A52082):
             model_name = RPI_3_KEY
+           
+         elif revision_hex & 0x00FFFFFF in (0x00A03111, 0x00B03111, 0x00B03112, 0x00C03111, 0x00C03112, 0x00D03114):
+            model_name = RPI_4_B_KEY
 
         elif revision_hex & 0x00FFFFFF in (0x00A01040, 0x00A01041, 0x00A21041, 0x00A22042):
             model_name = RPI_2_B_KEY
